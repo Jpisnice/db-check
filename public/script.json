@@ -1,0 +1,30 @@
+{
+  "userId": "user123",
+  "databases": [
+    {
+      "dbName1": "databaseA",
+      "dbName2": "databaseB",
+      "similarities": {
+        "commonFields": ["field1", "field2", "field3"],
+        "fieldTypes": {
+          "field1": "String",
+          "field2": "Number",
+          "field3": "Date"
+        },
+        "totalSimilarFields": 3
+      }
+    },
+    {
+      "dbName1": "databaseC",
+      "dbName2": "databaseD",
+      "similarities": {
+        "commonFields": ["field1", "field4"],
+        "fieldTypes": {
+          "field1": "String",
+          "field4": "Boolean"
+        },
+        "totalSimilarFields": 2
+      }
+    }
+  ]
+}
