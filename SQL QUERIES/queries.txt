@@ -1,3 +1,4 @@
+--Create 2 databses for comparison with same name
 -- Create customers table
 CREATE TABLE customers (
     customer_id INT PRIMARY KEY AUTO_INCREMENT,

@@ -64,5 +64,21 @@ async function compareDatabases(event) {
     const data = await response.json();
     console.log(data);
 
-    // Process and display the comparison result
+    // Save the comparison result for download
+    window.comparisonResult = data;
+
+    // Show the download button
+    document.getElementById('downloadButton').style.display = 'block';
+
+    // Process and display the comparison result (you can implement this part as needed)
+}
+
+function downloadComparisonResult() {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(window.comparisonResult, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "comparison_result.json");
+    document.body.appendChild(downloadAnchorNode); // required for firefox
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
 }
