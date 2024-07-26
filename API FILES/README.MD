@@ -1,4 +1,4 @@
-##These Files are Meant for the server Logic
+#These Files are Meant for the server Logic
 
 Place these files inside xamp/htdocs/dbcompare/
 
