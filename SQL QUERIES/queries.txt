@@ -1,0 +1,62 @@
+-- Create customers table
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50),
+    email VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create products table
+CREATE TABLE products (
+    product_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    price DECIMAL(10, 2)
+);
+
+-- Create orders table
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT,
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+-- Create order_items table
+CREATE TABLE order_items (
+    order_item_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+-- Insert dummy data into customers
+INSERT INTO customers (name, email, created_at) VALUES
+('Alice Johnson', 'alice@example.com', '2024-07-01 10:00:00'),
+('Bob Smith', 'bob@example.com', '2024-07-02 11:00:00'),
+('Charlie Brown', 'charlie@example.com', '2024-07-03 12:00:00'),
+('Diana Prince', 'diana@example.com', '2024-07-04 13:00:00');
+
+-- Insert dummy data into products
+INSERT INTO products (name, price) VALUES
+('Laptop', 999.99),
+('Smartphone', 599.99),
+('Tablet', 399.99),
+('Smartwatch', 199.99);
+
+-- Insert dummy data into orders
+INSERT INTO orders (customer_id, order_date) VALUES
+(1, '2024-07-05 14:00:00'),
+(2, '2024-07-06 15:00:00'),
+(3, '2024-07-07 16:00:00'),
+(4, '2024-07-08 17:00:00');
+
+-- Insert dummy data into order_items
+INSERT INTO order_items (order_id, product_id, quantity) VALUES
+(1, 1, 1),  -- Alice Johnson ordered 1 Laptop
+(1, 2, 2),  -- Alice Johnson ordered 2 Smartphones
+(2, 3, 1),  -- Bob Smith ordered 1 Tablet
+(3, 4, 3),  -- Charlie Brown ordered 3 Smartwatches
+(4, 1, 1),  -- Diana Prince ordered 1 Laptop
+(4, 3, 2);  -- Diana Prince ordered 2 Tablets

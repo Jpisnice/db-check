@@ -2,7 +2,7 @@
 header("Content-Type: application/json; charset=UTF-8");
 
 // Check if username and password are provided
-if (!isset($_POST['username']) || !isset($_POST['password'])) {
+if (!isset($_POST['username'])) {
     echo json_encode(["error" => "Username and password are required"]);
     exit();
 }
