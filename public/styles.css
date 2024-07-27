@@ -1,10 +1,21 @@
+*{
+    font-family: Helvetica, Arial,  sans-serif;
+}
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .container{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 40%;
     padding: 30px;
     margin:20px;
+    background-color: rgb(114, 183, 206);
+    border-radius: 10px;
 }
 
 .container h1{
@@ -28,7 +39,7 @@
     border: 1px solid #ccc;
 }
 
-.container form button{
+.container form button,#downloadButton{
     width: 10%;
     padding: 10px;
     margin: 10px;
@@ -48,4 +59,9 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+}
+
+.dbchoice{
+    margin: 10px;
+    padding: 10px;
 }

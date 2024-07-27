@@ -22,10 +22,14 @@
         </form>
         
         <form id="dbSelectionForm" style="display:none;" onsubmit="compareDatabases(event);">
-            <label for="database1">Select Database 1:</label>
-            <select id="database1" name="database1" required></select><br><br>
-            <label for="database2">Select Database 2:</label>
-            <select id="database2" name="database2" required></select><br><br>
+            <div class="dbchoice">
+                <label for="database1">Select Database 1:</label>
+                <select id="database1" name="database1" required></select>
+            </div><br><br>
+            <div class="dbchoice">
+                <label for="database2">Select Database 2:</label>
+                <select id="database2" name="database2" required></select>
+            </div><br><br>
             <button type="submit">Compare Databases</button>
         </form>
         
