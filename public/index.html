@@ -6,29 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Database Schema Comparison</title>
     <script src="app.js" defer></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <h1>Database Schema Comparison</h1>
-
-    <form id="credentialsForm" onsubmit="event.preventDefault(); fetchDatabases();">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password"><br><br>
-        <button type="submit">Fetch Databases</button>
-    </form>
-
-    <form id="dbSelectionForm" style="display:none;" onsubmit="compareDatabases(event);">
-        <label for="database1">Select Database 1:</label>
-        <select id="database1" name="database1" required></select><br><br>
-        <label for="database2">Select Database 2:</label>
-        <select id="database2" name="database2" required></select><br><br>
-        <button type="submit">Compare Databases</button>
-    </form>
-
-    <button id="downloadButton" style="display:none;" onclick="downloadComparisonResult()">Download Comparison
-        Result</button>
+    <div class="container" id="cont">
+        <h1>Database Schema Comparison</h1>
+        
+        <form id="credentialsForm" onsubmit="event.preventDefault(); fetchDatabases();">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password"><br><br>
+            <button type="submit">Fetch Databases</button>
+        </form>
+        
+        <form id="dbSelectionForm" style="display:none;" onsubmit="compareDatabases(event);">
+            <label for="database1">Select Database 1:</label>
+            <select id="database1" name="database1" required></select><br><br>
+            <label for="database2">Select Database 2:</label>
+            <select id="database2" name="database2" required></select><br><br>
+            <button type="submit">Compare Databases</button>
+        </form>
+        
+        <button id="downloadButton" style="display:none;" onclick="downloadComparisonResult()">Download Comparison
+            Result</button>
+    </div>
 </body>
 
 </html>

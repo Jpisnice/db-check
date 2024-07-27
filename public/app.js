@@ -20,11 +20,14 @@ async function fetchDatabases() {
         return;
     }
 
+    const container = document.getElementById('cont');
     const dbSelect1 = document.getElementById('database1');
     const dbSelect2 = document.getElementById('database2');
 
     dbSelect1.innerHTML = '';
     dbSelect2.innerHTML = '';
+
+    
 
     data.databases.forEach(db => {
         const option1 = document.createElement('option');
@@ -37,7 +40,16 @@ async function fetchDatabases() {
         dbSelect2.appendChild(option2);
     });
 
+    container.appendChild(document.getElementById('dbSelectionForm'));
     document.getElementById('dbSelectionForm').style.display = 'block';
+let dbSelectionForm = document.getElementById('dbSelectionForm');
+dbSelectionForm.style.display = 'flex';
+dbSelectionForm.style.flexDirection = 'column';
+dbSelectionForm.style.alignItems = 'center';
+dbSelectionForm.style.justifyContent = 'center';
+dbSelectionForm.style.width = '100%';
+dbSelectionForm.style.padding = '30px';
+dbSelectionForm.style.margin = '20px';
 }
 
 async function compareDatabases(event) {
