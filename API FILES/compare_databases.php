@@ -29,6 +29,10 @@ function getTables($conn, $database) {
     $stmt->execute();
     $result = $stmt->get_result();
 
+    if ($result === false) {
+        return ["error" => $conn->error];
+    }
+
     $tables = [];
     while ($row = $result->fetch_assoc()) {
         $tables[] = $row['table_name'];
@@ -45,6 +49,10 @@ function getTableColumns($conn, $database) {
     $stmt->execute();
     $result = $stmt->get_result();
     
+    if ($result === false) {
+        return ["error" => $conn->error];
+    }
+
     $tables = [];
     while ($row = $result->fetch_assoc()) {
         $tables[$row['table_name']][$row['column_name']] = $row['data_type'];
@@ -55,6 +63,11 @@ function getTableColumns($conn, $database) {
 $tables1 = getTables($conn1, $database1);
 $tables2 = getTables($conn2, $database2);
 
+if (isset($tables1['error']) || isset($tables2['error'])) {
+    echo json_encode(["error" => "Error fetching tables: " . ($tables1['error'] ?? '') . " / " . ($tables2['error'] ?? '')]);
+    exit();
+}
+
 $matchingTables = array_intersect($tables1, $tables2);
 $missingTablesInDb1 = array_diff($tables1, $tables2);
 $missingTablesInDb2 = array_diff($tables2, $tables1);
@@ -62,10 +75,17 @@ $missingTablesInDb2 = array_diff($tables2, $tables1);
 $columns1 = getTableColumns($conn1, $database1);
 $columns2 = getTableColumns($conn2, $database2);
 
+if (isset($columns1['error']) || isset($columns2['error'])) {
+    echo json_encode(["error" => "Error fetching table columns: " . ($columns1['error'] ?? '') . " / " . ($columns2['error'] ?? '')]);
+    exit();
+}
+
 $comparisons = [];
 
 foreach ($matchingTables as $table) {
     $commonFields = array_intersect_key($columns1[$table], $columns2[$table]);
+    $notMatchingFieldsInDb1 = array_diff_key($columns1[$table], $columns2[$table]);
+    $notMatchingFieldsInDb2 = array_diff_key($columns2[$table], $columns1[$table]);
     
     $fieldTypes = [];
     foreach ($commonFields as $field => $type) {
@@ -73,12 +93,11 @@ foreach ($matchingTables as $table) {
     }
     
     $comparisons[] = [
-        "tableName1" => $table,
-        "tableName2" => $table,
-        "similarities" => [
-            "commonFields" => array_keys($commonFields),
-            "fieldTypes" => $fieldTypes,
-            "totalSimilarFields" => count($commonFields)
+        "tableName" => $table,
+        "commonFields" => $fieldTypes,
+        "uncommonFields" => [
+            "inDb1" => array_keys($notMatchingFieldsInDb1),
+            "inDb2" => array_keys($notMatchingFieldsInDb2)
         ]
     ];
 }
@@ -89,13 +108,21 @@ $response = [
         [
             "dbName1" => $database1,
             "dbName2" => $database2,
-            "matchingTables" => $matchingTables,
+            "tablesInDb1" => $tables1,
+            "tablesInDb2" => $tables2,
+            "matchingTables" => array_map(function($table) use ($comparisons) {
+                foreach ($comparisons as $comparison) {
+                    if ($comparison['tableName'] == $table) {
+                        return $comparison;
+                    }
+                }
+                return null;
+            }, $matchingTables),
             "missingTables" => [
                 "inDb1" => $missingTablesInDb2,
                 "inDb2" => $missingTablesInDb1
                 
-            ],
-            "tableComparisons" => $comparisons
+            ]
         ]
     ]
 ];
